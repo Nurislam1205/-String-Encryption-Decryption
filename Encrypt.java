@@ -2,6 +2,7 @@ import java.util.Scanner;
 public class Encrypt {
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
+
         System.out.println("Choose one of the following options:");
         System.out.println("1. Encrypt by Caesar encryption.");
         System.out.println("2. Decrypt by Caesar decryption.");
@@ -47,7 +48,7 @@ public class Encrypt {
                 System.out.println("Error: Please enter only letters for Vigenere key.");
                 keyWord = in.next();
             }
-            String encryptedText=toEncryptVirger(textToEncrypt,keyWord);
+            String encryptedText= toEncryptVigenere(textToEncrypt,keyWord);
             System.out.println("Encrypted text: "+encryptedText);
         }
         else if(num==4){
@@ -79,7 +80,7 @@ public class Encrypt {
         for (int i = 0; i < textToEncrypt.length(); i++) {
             char c = textToEncrypt.charAt(i);
             if (Character.isLetter(c)) {
-                //For only letters
+                //For only lower letters from "a" to "z"
                 c=(char)((c-'a'+key+26)%26+'a');
 
             }
@@ -95,13 +96,14 @@ public class Encrypt {
         for (int i = 0; i < textToDecrypt.length(); i++) {
             char c = textToDecrypt.charAt(i);
             if (Character.isLetter(c)) {
+                //The same but reverse
                 c=(char)((c-'a'-key+26)%26+'a');
             }
             DecryptedText.append(c);
         }
         return DecryptedText.toString();
     }
-    public static String toEncryptVirger(String textToEncrypt, String keyWord) {
+    public static String toEncryptVigenere(String textToEncrypt, String keyWord) {
         StringBuilder encryptedText = new StringBuilder() ;
         textToEncrypt=textToEncrypt.toLowerCase();
         keyWord=keyWord.toLowerCase();
@@ -110,6 +112,7 @@ public class Encrypt {
             char c = textToEncrypt.charAt(i);
 
             if (Character.isLetter(c)) {
+                //
                 int shift = keyWord.charAt(keyIndex) - 'a';
 
                 c = (char) ((c - 'a' + shift + 26) % 26 + 'a');
@@ -145,7 +148,7 @@ public class Encrypt {
     }
         public static void exitProgram() {
             System.out.println("Exiting program...");
-            System.exit(0);
+            return;
         }
 
 }
