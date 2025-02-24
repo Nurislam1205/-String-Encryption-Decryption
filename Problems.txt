@@ -1,4 +1,4 @@
 First probles was with understanding
 How should I do loop to back from "z" letter to letter "a"
 And how use both lower and upper cases and that problem i didin't solve, I just changed all letters to lower case and word in that diapazone.
-Then i  has a little problesm with inputs, but it was very easy to solve.
+Then i  has a little problems with inputs, but it was very easy to solve.
