@@ -11,139 +11,97 @@ public class Encrypt {
         System.out.println("\033[31mChoose any other number to exit.\033[0m");
         System.out.print("Please enter only number: ");
         int num=in.nextInt();
-        if(num==1){
+        in.nextLine();
+
+        if (num == 1) {
             System.out.println("Please enter the text to encrypt:");
-            String textToEncrypt=in.next();
-            while (!textToEncrypt.matches("[a-zA-Z]+")) {
-                System.out.println("Error: Please enter only letters for Caesar cipher.");
-                textToEncrypt = in.next();
-            }
+            String textToEncrypt = in.nextLine();
             System.out.println("Enter number to move:");
-            long key =in.nextInt();
-            String encryptedText= toEncryptCaesar(textToEncrypt,key);
-            System.out.println("Encrypted text: "+encryptedText);
-        }
-        else if(num==2){
+            long key = in.nextInt();
+            String encryptedText = toEncryptCaesar(textToEncrypt, key);
+            System.out.println("Encrypted text: " + encryptedText);
+        } else if (num == 2) {
             System.out.println("Please enter the text to decrypt:");
-            String textToDecrypt=in.next();
-            while (!textToDecrypt.matches("[a-zA-Z]+")) {
-                System.out.println("Error: Please enter only letters for Caesar cipher.");
-                textToDecrypt = in.next();
-            }
+            String textToDecrypt = in.nextLine();
             System.out.println("Enter number to move:");
-            long key=in.nextInt();
-            String encryptedText= toDecryptCaesar(textToDecrypt,key);
-            System.out.println("Decrypted text: "+encryptedText);
-        }
-        else if(num==3){
+            long key = in.nextInt();
+            String decryptedText = toDecryptCaesar(textToDecrypt, key);
+            System.out.println("Decrypted text: " + decryptedText);
+        } else if (num == 3) {
             System.out.println("Please enter the text to encrypt:");
-            String textToEncrypt=in.next();
-            while (!textToEncrypt.matches("[a-zA-Z]+")) {
-                System.out.println("Error: Please enter only letters for Vigenere cipher.");
-                textToEncrypt = in.next();
-            }
+            String textToEncrypt = in.nextLine();
             System.out.println("Please enter key word:");
-            String keyWord=in.next();
-            while (!keyWord.matches("[a-zA-Z]+")) {
-                System.out.println("Error: Please enter only letters for Vigenere key.");
-                keyWord = in.next();
-            }
-            String encryptedText= toEncryptVigenere(textToEncrypt,keyWord);
-            System.out.println("Encrypted text: "+encryptedText);
-        }
-        else if(num==4){
+            String keyWord = in.next();
+            String encryptedText = toEncryptVigenere(textToEncrypt, keyWord);
+            System.out.println("Encrypted text: " + encryptedText);
+        } else if (num == 4) {
             System.out.println("Please enter the text to decrypt:");
-            String textToDecrypt=in.next();
-            while (!textToDecrypt.matches("[a-zA-Z]+")) {
-                System.out.println("Error: Please enter only letters for Vigenere cipher.");
-                textToDecrypt = in.next();
-            }
+            String textToDecrypt = in.nextLine();
             System.out.println("Enter key word:");
-            String keyWord=in.next();
-            while (!keyWord.matches("[a-zA-Z]+")) {
-                System.out.println("Error: Please enter only letters for Vigenere key.");
-                keyWord = in.next();
-            }
-            String decryptedText=(toDecryptVigenere(textToDecrypt,keyWord));
-            System.out.println("Decrypted text: "+decryptedText);
-        }
-        else{
+            String keyWord = in.next();
+            String decryptedText = toDecryptVigenere(textToDecrypt, keyWord);
+            System.out.println("Decrypted text: " + decryptedText);
+        } else {
             exitProgram();
         }
 
     }
-
     public static String toEncryptCaesar(String textToEncrypt, long key) {
-        //Caesar encryption
-        StringBuilder EncryptedText = new StringBuilder() ;
-        textToEncrypt=textToEncrypt.toLowerCase();
-        for (int i = 0; i < textToEncrypt.length(); i++) {
-            char c = textToEncrypt.charAt(i);
+        StringBuilder encryptedText = new StringBuilder();
+        for (char c : textToEncrypt.toCharArray()) {
             if (Character.isLetter(c)) {
-                //For only lower letters from "a" to "z"
-                c=(char)((c-'a'+key+26)%26+'a');
-
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                c = (char) ((c - base + key + 26) % 26 + base);
             }
-            EncryptedText.append(c);
-        }
-        return EncryptedText.toString();
-    }
-
-    public static String toDecryptCaesar(String textToDecrypt, long key) {
-        //Caesar decryption
-        StringBuilder DecryptedText = new StringBuilder() ;
-        textToDecrypt=textToDecrypt.toLowerCase();
-        for (int i = 0; i < textToDecrypt.length(); i++) {
-            char c = textToDecrypt.charAt(i);
-            if (Character.isLetter(c)) {
-                //The same but reverse
-                c=(char)((c-'a'-key+26)%26+'a');
-            }
-            DecryptedText.append(c);
-        }
-        return DecryptedText.toString();
-    }
-    public static String toEncryptVigenere(String textToEncrypt, String keyWord) {
-        StringBuilder encryptedText = new StringBuilder() ;
-        textToEncrypt=textToEncrypt.toLowerCase();
-        keyWord=keyWord.toLowerCase();
-        int keyIndex=0;
-        for (int i = 0; i < textToEncrypt.length(); i++) {
-            char c = textToEncrypt.charAt(i);
-
-            if (Character.isLetter(c)) {
-                //
-                int shift = keyWord.charAt(keyIndex) - 'a';
-
-                c = (char) ((c - 'a' + shift + 26) % 26 + 'a');
-                keyIndex = (keyIndex + 1) % keyWord.length();
-            }
-
             encryptedText.append(c);
         }
-
         return encryptedText.toString();
-
     }
-    public static String toDecryptVigenere(String textToDecrypt, String keyWord) {
-        StringBuilder decryptedText = new StringBuilder();
-        textToDecrypt = textToDecrypt.toLowerCase();
-        keyWord = keyWord.toLowerCase();
 
+    public static String toDecryptCaesar(String textToEncrypt, long key) {
+        //Caesar decryption
+        StringBuilder encryptedText = new StringBuilder();
+        for (char c : textToEncrypt.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                c = (char) ((c - base - key + 26) % 26 + base);
+            }
+            encryptedText.append(c);
+        }
+        return encryptedText.toString();
+    }
+
+    public static String toEncryptVigenere(String textToEncrypt, String keyWord) {
+        StringBuilder encryptedText = new StringBuilder();
+        keyWord = keyWord.toLowerCase();
         int keyIndex = 0;
 
-        for (int i = 0; i < textToDecrypt.length(); i++) {
-            char c = textToDecrypt.charAt(i);
-
+        for (char c : textToEncrypt.toCharArray()) {
             if (Character.isLetter(c)) {
-                int shift = keyWord.charAt(keyIndex) - 'a';
-                c = (char) ((c - 'a' - shift + 26) % 26 + 'a');
-                keyIndex = (keyIndex + 1) % keyWord.length();
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                int shift = keyWord.charAt(keyIndex % keyWord.length()) - 'a';
+                c = (char) ((c - base + shift + 26) % 26 + base);
+                keyIndex++;
             }
+            encryptedText.append(c);
+        }
+        return encryptedText.toString();
+    }
 
+    public static String toDecryptVigenere(String textToDecrypt, String keyWord) {
+        StringBuilder decryptedText = new StringBuilder();
+        keyWord = keyWord.toLowerCase();
+        int keyIndex = 0;
+
+        for (char c : textToDecrypt.toCharArray()) {
+            if (Character.isLetter(c)) {
+                char base = Character.isLowerCase(c) ? 'a' : 'A';
+                int shift = keyWord.charAt(keyIndex % keyWord.length()) - 'a';
+                c = (char) ((c - base - shift + 26) % 26 + base);
+                keyIndex++;
+            }
             decryptedText.append(c);
         }
-
         return decryptedText.toString();
     }
         public static void exitProgram() {
