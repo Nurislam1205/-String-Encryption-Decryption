@@ -24,3 +24,6 @@ The keyword repeats along the length of the text.
 Decryption
 The same keyword is used.
 Letters of the encrypted text are shifted backward based on the keyword values.
+![Снимок экрана (80)](https://github.com/user-attachments/assets/7b319839-e311-48c4-943c-ee21cb69acd6)
+
+![image](https://github.com/user-attachments/assets/47e814c9-3865-4f25-865e-8f173f3af00c)
